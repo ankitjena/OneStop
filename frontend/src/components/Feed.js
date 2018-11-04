@@ -8,6 +8,13 @@ class Feed extends Component {
     this.state = { img:''}
   }
 
+  getDate(date) {
+    let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    let arr = date.split('-')
+    let newDate = `${arr[2].slice(0,2)} ${months[parseInt(arr[1]) - 1]} ${arr[0]}`
+    return newDate
+  }
+
 componentDidMount() {
   fetch(`https://graph.facebook.com/${this.props.data.id}?fields=images&access_token=${this.props.access}`)
     .then(res => res.json())
@@ -19,12 +26,14 @@ componentDidMount() {
 }
 
 render() {
+  let date = this.getDate(this.props.data.created_time);
   return(
-      <div>
-        <img src={this.state.img} height='200px' width='200px' />
+      <div className="col-lg-4">
+        <p>{date}</p>
+        <img src={this.state.img} height='400px' width='400px' />
         <br />
         <p>{this.props.data.name}</p>
-        <Divider />
+        <hr width="500px" />
       </div>
   )
 }

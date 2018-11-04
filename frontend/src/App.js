@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TwitterLogin from 'react-twitter-auth';
 import FacebookLogin from 'react-facebook-login';
 import { GoogleLogin } from 'react-google-login';
+import {Form, Button} from 'semantic-ui-react';
 import config from './config.json';
 import Feed from './components/Feed'
 
@@ -9,7 +10,8 @@ class App extends Component {
 
     constructor() {
         super();
-        this.state = { isAuthenticated: false, user: null, token: '', id: '', data:[], access: '', friends: ''};
+        this.state = { isAuthenticated: false, user: null, token: '', id: '', data:[], access: '', friends: '', instausername: ''};
+        this.handleChange = this.handleChange.bind(this)
     }
 
     logout = () => {
@@ -91,6 +93,17 @@ class App extends Component {
           })
     };
 
+    handleChange(event) {
+      this.setState({
+        instausername: event.target.value
+      })
+    }
+
+    handleSubmit() {
+      fetch(`https://instagram.com/${this.state.instausername}/?__a=1`, {mode: 'cors', headers: {'Access-Control-Allow-Origin': '*'}, datatype: "jsonp" })
+        .then(res => console.log(res))
+    }
+
     // googleResponse = (response) => {
     //     const tokenBlob = new Blob([JSON.stringify({access_token: response.accessToken}, null, 2)], {type : 'application/json'});
     //     const options = {
@@ -129,12 +142,27 @@ class App extends Component {
             ) :
             (
                 <div>
-
-                    <FacebookLogin
+                  <div className="row">
+                    <div className="col-lg-4">
+                      <FacebookLogin
                         appId={config.FACEBOOK_APP_ID}
                         autoLoad={false}
                         fields="name,email,picture"
                         callback={this.facebookResponse} />
+                    </div>
+                    <div className="col-lg-4">
+                      <Form onSubmit={() => this.handleSubmit()}>
+                        <Form.Field>
+                          <input type="text" placeholder="Enter your username" onChange={this.handleChange}/>
+                        </Form.Field>
+                        <Form.Field inline>
+                          <input type="password" placeholder="Enter password"/>
+                        </Form.Field>
+                        <Button type='submit'>Login with Instagram</Button>
+
+                      </Form>
+                    </div>
+                  </div>
 
                 </div>
             );
