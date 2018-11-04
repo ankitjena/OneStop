@@ -128,9 +128,9 @@ class App extends Component {
                                                   )) : ''
     let content = !!this.state.isAuthenticated ?
               (
-                <div>
+                <div className="col-lg-4">
                     <div>
-                        <p>Total no. of friends: {this.state.friends}</p>
+                        <p><strong>TOTAL NUMBER OF FRIENDS: </strong>{this.state.friends}</p>
                         {feed}
                     </div>
                     <div>
@@ -151,16 +151,7 @@ class App extends Component {
                         callback={this.facebookResponse} />
                     </div>
                     <div className="col-lg-4">
-                      <Form onSubmit={() => this.handleSubmit()}>
-                        <Form.Field>
-                          <input type="text" placeholder="Enter your username" onChange={this.handleChange}/>
-                        </Form.Field>
-                        <Form.Field inline>
-                          <input type="password" placeholder="Enter password"/>
-                        </Form.Field>
-                        <Button type='submit'>Login with Instagram</Button>
-
-                      </Form>
+                        <button><a href="http://localhost:3000">Instagram Login</a></button>
                     </div>
                   </div>
 
