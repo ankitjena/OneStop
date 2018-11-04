@@ -23,8 +23,7 @@ render() {
       <div>
         <img src={this.state.img} height='200px' width='200px' />
         <br />
-        <b>{}</b>
-        <p>{}</p>
+        <p>{this.props.data.name}</p>
         <Divider />
       </div>
   )
