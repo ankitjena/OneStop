@@ -9,7 +9,7 @@ class App extends Component {
 
     constructor() {
         super();
-        this.state = { isAuthenticated: false, user: null, token: '', id: '', data:[], access: ''};
+        this.state = { isAuthenticated: false, user: null, token: '', id: '', data:[], access: '', friends: ''};
     }
 
     logout = () => {
@@ -82,6 +82,13 @@ class App extends Component {
             this.setState({data: data})
             console.log(this.state.data);
           })
+
+        fetch(`https://graph.facebook.com/me?fields=friends&access_token=${response.accessToken}`)
+          .then(res => res.json())
+          .then(json => {
+            this.setState({friends: json.friends.summary.total_count})
+            console.log(json.friends.summary.total_count);
+          })
     };
 
     // googleResponse = (response) => {
@@ -110,6 +117,7 @@ class App extends Component {
               (
                 <div>
                     <div>
+                        <p>Total no. of friends: {this.state.friends}</p>
                         {feed}
                     </div>
                     <div>

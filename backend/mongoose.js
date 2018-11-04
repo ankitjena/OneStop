@@ -9,7 +9,7 @@ module.exports = function () {
 
     var UserSchema = new Schema({
         email: {
-            type: String, required: true,
+            type: String, required: false,
             trim: true, unique: true,
             match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
         },
